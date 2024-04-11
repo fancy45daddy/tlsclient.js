@@ -92,7 +92,7 @@ export function createAdapter(_config) {
         certificatePinningHosts: {},
         headers: {
           ...(config.defaultHeaders || DEFAULT_HEADERS),
-          ...config.headers,
+          ...globalThis.Object.fromEntries(globalThis.Object.entries(config.headers).map(_ => globalThis.Object.is(_.at(0), 'Content-Type') && globalThis.Object.is(_.at(1), 'multipart/form-data') ? ['Content-Type', config.data.getHeaders()['content-type']] : _)),
         },
         headerOrder: config.headerOrder || DEFAULT_HEADER_ORDER,
         requestUrl: config.url,
