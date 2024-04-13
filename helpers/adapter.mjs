@@ -1,9 +1,8 @@
 import workerpool from "workerpool"
 import http from "http"
-import { AxiosError } from "axios"
+import axios from 'axios'
 import { getTLSDependencyPath } from "./tlspath.mjs"
 import path from 'path'
-import FormData from 'form-data'
 
 let { TLS_LIB_PATH } = getTLSDependencyPath();
 
@@ -124,7 +123,7 @@ export function createAdapter(_config) {
       };
       const validateStatus = response.config.validateStatus;
       if (!response.status || !validateStatus || validateStatus(response.status)) return response
-      else throw new AxiosError(
+      else throw new axios.AxiosError(
         "Request failed with status code " + response.status,
         [AxiosError.ERR_BAD_REQUEST, AxiosError.ERR_BAD_RESPONSE][
           Math.floor(response.status / 100) - 4
