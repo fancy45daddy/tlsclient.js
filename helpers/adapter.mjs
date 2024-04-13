@@ -89,14 +89,14 @@ export function createAdapter(_config) {
         proxyUrl: config.proxy || "",
         customTlsClient: config.customTlsClient || undefined,
         certificatePinningHosts: {},
-        headers: {
-          ...(config.defaultHeaders || DEFAULT_HEADERS),
-          ...globalThis.Object.fromEntries(globalThis.Object.entries(config.headers).map(_ => globalThis.Object.is(_.at(0), 'Content-Type') && globalThis.Object.is(_.at(1), 'multipart/form-data') ? ['Content-Type', config.data.getHeaders()['content-type']] : _)),
-        },
         headerOrder: config.headerOrder || DEFAULT_HEADER_ORDER,
         requestUrl: config.url,
         requestMethod: config.method.toUpperCase(),
-        requestBody: config.data instanceof globalThis.FormData ? await (async () => {const chunks = []; for await (const chunk of axios.formDataToStream(config.data)) chunks.push(Buffer.from(chunk)); return globalThis.Buffer.concat(chunks).toString('utf-8')})() : config.data, 
+        requestBody: config.data instanceof globalThis.FormData ? await (async () => {const chunks = []; for await (const chunk of axios.formDataToStream(config.data, _ => config.headers.set(_))) chunks.push(Buffer.from(chunk)); return globalThis.Buffer.concat(chunks).toString('utf-8')})() : config.data,
+        headers: {
+          ...(config.defaultHeaders || DEFAULT_HEADERS),
+          ...config.headers,
+        },
         requestCookies: await config.cookiejar?.serialize()?.then(_ => _.cookies.map(_ => globalThis.Object.fromEntries(globalThis.Object.entries(_).map(_ => globalThis.Object.is(_.at(0), 'key') ? ['name', _.at(1)] : _)))) ?? []
       };
       let res = await pool.exec("request", [JSON.stringify(requestPayload)]);
