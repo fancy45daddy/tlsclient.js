@@ -96,7 +96,7 @@ export function createAdapter(_config) {
         headerOrder: config.headerOrder || DEFAULT_HEADER_ORDER,
         requestUrl: config.url,
         requestMethod: config.method.toUpperCase(),
-        requestBody: config.data instanceof FormData ? config.data.getBuffer().toString() : config.data, 
+        requestBody: config.data instanceof globalThis.FormData ? await (async () => {const chunks = []; for await (const chunk of axios.formDataToStream(config.data)) chunks.push(Buffer.from(chunk)); return globalThis.Buffer.concat(chunks).toString('utf-8')})() : config.data, 
         requestCookies: await config.cookiejar?.serialize()?.then(_ => _.cookies.map(_ => globalThis.Object.fromEntries(globalThis.Object.entries(_).map(_ => globalThis.Object.is(_.at(0), 'key') ? ['name', _.at(1)] : _)))) ?? []
       };
       let res = await pool.exec("request", [JSON.stringify(requestPayload)]);
