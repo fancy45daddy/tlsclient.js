@@ -8,14 +8,14 @@ let { TLS_LIB_PATH } = getTLSDependencyPath();
 
 let DEFAULT_CLIENT_ID = "chrome_120";
 let DEFAULT_HEADERS = {
-  accept: "*/*",
+  accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
   "accept-encoding": "gzip, deflate, br",
   "accept-language": "en-US,en;q=0.9",
   "sec-ch-ua": `"Chromium";v="118", "Google Chrome";v="118", "Not=A?Brand";v="99"`,
   "sec-ch-ua-mobile": "?0",
   "sec-ch-ua-platform": '"Windows"',
   "sec-fetch-dest": "empty",
-  "sec-fetch-mode": "cors",
+  "sec-fetch-mode": "navigate",
   "sec-fetch-site": "same-origin",
   "sec-fetch-user": "?1",
   "user-agent":
