@@ -14,7 +14,7 @@ let DEFAULT_HEADERS = {
   "sec-ch-ua": `"Chromium";v="118", "Google Chrome";v="118", "Not=A?Brand";v="99"`,
   "sec-ch-ua-mobile": "?0",
   "sec-ch-ua-platform": '"Windows"',
-  "sec-fetch-dest": "empty",
+  "sec-fetch-dest": "document",
   "sec-fetch-mode": "navigate",
   "sec-fetch-site": "same-origin",
   "sec-fetch-user": "?1",
