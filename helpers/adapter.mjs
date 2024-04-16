@@ -90,7 +90,7 @@ export function createAdapter(_config) {
         headerOrder: config.headerOrder || DEFAULT_HEADER_ORDER,
         requestUrl: config.url,
         requestMethod: config.method.toUpperCase(),
-        requestBody:config.data instanceof globalThis.FormData ? await (async () => {const chunks = []; for await (const chunk of axios.formDataToStream(config.data, _ => config.headers.set(_))) chunks.push(globalThis.Buffer.from(chunk)); return globalThis.Buffer.concat(chunks).toString('base64')})() : globalThis.btoa(config.data),
+        requestBody:config.data instanceof globalThis.FormData ? await (async () => {const chunks = []; for await (const chunk of axios.formDataToStream(config.data, _ => config.headers.set(_))) chunks.push(globalThis.Buffer.from(chunk)); return globalThis.Buffer.concat(chunks).toString('base64')})() : globalThis.Object.is(typeof config.data, 'undefined') ? undefined : globalThis.btoa(config.data),
         headers: {
           ...(config.defaultHeaders || DEFAULT_HEADERS),
           ...(config.data instanceof globalThis.FormData ? {'Content-Type':config.headers['Content-Type']} : config.headers),
