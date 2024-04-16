@@ -93,7 +93,7 @@ export function createAdapter(_config) {
         requestBody: config.data instanceof globalThis.FormData ? await (async () => {const chunks = []; for await (const chunk of axios.formDataToStream(config.data, _ => config.headers.set(_))) chunks.push(Buffer.from(chunk)); return globalThis.Buffer.concat(chunks).toString('utf-8')})() : config.data,
         headers: {
           ...(config.defaultHeaders || DEFAULT_HEADERS),
-          ...config.headers,
+          ...(config.data instanceof globalThis.FormData ? {'Content-Type':config.headers['Content-Type']} : config.headers),
         },
         requestCookies: await config.cookiejar?.serialize()?.then(_ => _.cookies.map(_ => globalThis.Object.fromEntries(globalThis.Object.entries(_).map(_ => globalThis.Object.is(_.at(0), 'key') ? ['name', _.at(1)] : _)))) ?? []
       };
