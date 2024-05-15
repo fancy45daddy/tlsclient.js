@@ -1,6 +1,6 @@
 import workerpool from "workerpool"
 import http from "http"
-import * as axios from 'axios'
+import axios from 'axios'
 import { getTLSDependencyPath } from "./tlspath.mjs"
 import path from 'path'
 
