@@ -1,6 +1,6 @@
 import workerpool from "workerpool"
 import http from "http"
-import axios from 'axios'
+import * as axios from 'axios'
 import { getTLSDependencyPath } from "./tlspath.mjs"
 import path from 'path'
 
@@ -129,7 +129,7 @@ export function createAdapter(_config) {
       if (!response.status || !validateStatus || validateStatus(response.status)) return response
       else throw new axios.AxiosError(
         "Request failed with status code " + response.status,
-        [AxiosError.ERR_BAD_REQUEST, AxiosError.ERR_BAD_RESPONSE][
+        [axios.AxiosError.ERR_BAD_REQUEST, axios.AxiosError.ERR_BAD_RESPONSE][
           Math.floor(response.status / 100) - 4
         ],
         response.config,
