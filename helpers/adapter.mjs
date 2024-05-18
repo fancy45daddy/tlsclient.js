@@ -82,6 +82,7 @@ export function createAdapter(_config) {
         followRedirects: config.followRedirects || true,
         insecureSkipVerify: config.insecureSkipVerify || true,
         isByteRequest: true,
+        isByteResponse: true,
         catchPanics: false,
         withDebug: false,
         forceHttp1: config.forceHttp1 || false,
@@ -112,7 +113,7 @@ export function createAdapter(_config) {
             : resJSON.headers[key];
       });
       var response = {
-        data: resJSON.body,
+        data: globalThis.atob(resJSON.body.solit(',').at(1)),
         status: resJSON.status,
         statusText: http.STATUS_CODES[resJSON.status] ?? '',
         headers: resHeaders,
