@@ -113,7 +113,7 @@ export function createAdapter(_config) {
             : resJSON.headers[key];
       });
       var response = {
-        data: globalThis.atob(resJSON.body.split(',').at(1)),
+	      data: resJSON.status ? globalThis.atob(resJSON.body.split(',').at(1)) : resJSON.body,
         status: resJSON.status,
         statusText: http.STATUS_CODES[resJSON.status] ?? '',
         headers: resHeaders,
